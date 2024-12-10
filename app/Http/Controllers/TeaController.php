@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tea;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,7 +16,11 @@ class TeaController extends Controller
     public function index(): View
     {
         //
-        return view('dashboard');
+        return view('dashboard', [
+            'teaCount' => Tea::all()->count(),
+            'user' => auth()->user(),
+            'teas' => Tea::all(),
+        ]);
     }
 
     /**
@@ -34,6 +39,7 @@ class TeaController extends Controller
         //
         $validated = $request->validate([
             'message' => 'required|string|max:255',
+            'rating' => 'required|integer|between:1,10',
         ]);
 
         $request->user()->teas()->create($validated);
