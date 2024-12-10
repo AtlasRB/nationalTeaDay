@@ -10,6 +10,7 @@ use Illuminate\View\View;
 
 class TeaController extends Controller
 {
+    /** Functions for tea day 1 **/
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +36,10 @@ class TeaController extends Controller
             'teaCount' => Tea::where('year', 1)->get()->count(),
             'userCount' => Tea::where('user_id', $userId)->where('year', 1)->count(),
             'teas' => $teas,
+            'totalAverage' => Tea::where('year', 1)->avg('rating'),
+            'userAverage' => Tea::where('user_id', $userId)->where('year', 1)->avg('rating'),
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -55,49 +57,24 @@ class TeaController extends Controller
 
         return redirect(route('dashboard'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tea $tea)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tea $tea)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tea $tea)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Tea $tea)
     {
         //
+        if ($tea->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to delete this log.');
+        }
+
+        // Delete the log
+        $tea->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Log deleted successfully.');
     }
 
 
-    /** Functions for next year **/
+    /** Functions for tea day 2 **/
     public function index2(Request $request): View
     {
         //
@@ -120,6 +97,8 @@ class TeaController extends Controller
             'teaCount' => Tea::where('year', 2)->get()->count(),
             'userCount' => Tea::where('user_id', $userId)->where('year', 2)->count(),
             'teas' => $teas,
+            'totalAverage' => Tea::where('year', 2)->avg('rating'),
+            'userAverage' => Tea::where('user_id', $userId)->where('year', 2)->avg('rating'),
         ]);
     }
     /**
@@ -138,5 +117,20 @@ class TeaController extends Controller
         $request->user()->teas()->create($validated);
 
         return redirect(route('2025'));
+    }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy2(Tea $tea)
+    {
+        //
+        if ($tea->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to delete this log.');
+        }
+
+        // Delete the log
+        $tea->delete();
+
+        return redirect()->route('2025')->with('success', 'Log deleted successfully.');
     }
 }

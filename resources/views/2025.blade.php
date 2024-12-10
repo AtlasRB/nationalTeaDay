@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h1>NATIONAL TEA DRINKING DAY 2</h1>
+
             <form method="POST" action="{{ route('2025.store') }}">
                 @csrf
                 <label for="message">Tea Type: </label>
@@ -9,7 +11,7 @@
                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
                 <x-primary-button class="mt-4">{{ __('Log') }}</x-primary-button>
             </form>
-            <p>TEST SUCCESS</p>
+
             <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
                 <p>Total teas logged: {{$teaCount}}</p>
                 <p>Total teas you have logged: {{$userCount}}</p>
@@ -34,8 +36,23 @@
                             <p class="mt-4 text-lg text-gray-900">{{ $tea->message }}</p>
                         </div>
                     </div>
+                    @if ($tea->user_id === auth()->id())
+                        <form method="POST" action="{{ route('2025.destroy', $tea->id) }}" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this log?');">
+                                Delete
+                            </button>
+                        </form>
+                    @endif
                 @endforeach
             </div>
+
+            <section id="statistics">
+                <h2>Statistics</h2>
+                <p>Total tea average rating: {{$totalAverage}}</p>
+                <p>Your total tea average rating: {{$userAverage}}</p>
+            </section>
         </div>
     </div>
 </x-app-layout>
