@@ -11,6 +11,7 @@ class Tea extends Model
     protected $fillable = [
         'message',
         'rating',
+        'year',
     ];
 
     public function user(): BelongsTo

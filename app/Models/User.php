@@ -51,9 +51,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tea::class, '');
     }
-
-    public function teaUserCount()
-    {
-        return $this->teas()->count();
-    }
 }

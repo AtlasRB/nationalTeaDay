@@ -8,18 +8,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [TeaController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+   Route::get('/dashboard', [TeaController::class, 'index'])->name('dashboard');
+   Route::get('/dashboard/filterC', [TeaController::class, 'index'])->name('dashboard.filteredC');
+   Route::get('/dashboard/filterH', [TeaController::class, 'index'])->name('dashboard.filteredH');
+   Route::Post('/dashboard', [TeaController::class, 'store'])->name('dashboard.store');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/2025', [TeaController::class, 'index2'])->name('2025');
+    Route::get('/2025/filterC', [TeaController::class, 'index2'])->name('2025.filteredC');
+    Route::get('/2025/filterH', [TeaController::class, 'index2'])->name('2025.filteredH');
+    Route::Post('/2025', [TeaController::class, 'store2'])->name('2025.store');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::resource('tea', TeaController::class)
-    ->only(['index', 'store'])
-    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

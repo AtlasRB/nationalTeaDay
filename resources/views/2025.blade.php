@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <form method="POST" action="{{ route('dashboard.store') }}">
+            <form method="POST" action="{{ route('2025.store') }}">
                 @csrf
                 <label for="message">Tea Type: </label>
                 <input type="text" name="message" id="message" />
@@ -9,14 +9,14 @@
                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
                 <x-primary-button class="mt-4">{{ __('Log') }}</x-primary-button>
             </form>
-
+            <p>TEST SUCCESS</p>
             <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
                 <p>Total teas logged: {{$teaCount}}</p>
                 <p>Total teas you have logged: {{$userCount}}</p>
                 <div class="mt-4">
-                    <a href="{{ route('dashboard') }}" class="px-4 py-2 bg-blue-500 rounded">Show All Teas</a>
-                    <a href="{{ route('dashboard.filteredC') }}" class="px-4 py-2 bg-green-500 rounded">Show Filtered Connor Teas</a>
-                    <a href="{{ route('dashboard.filteredH') }}" class="px-4 py-2 bg-green-400 rounded">Show Filtered Henry Teas</a>
+                    <a href="{{ route('2025') }}" class="px-4 py-2 bg-blue-500 rounded">Show All Teas</a>
+                    <a href="{{ route('2025.filteredC') }}" class="px-4 py-2 bg-green-500 rounded">Show Filtered Connor Teas</a>
+                    <a href="{{ route('2025.filteredH') }}" class="px-4 py-2 bg-green-400 rounded">Show Filtered Henry Teas</a>
                 </div>
                 @foreach ($teas as $tea)
                     <div class="p-6 flex space-x-2">
