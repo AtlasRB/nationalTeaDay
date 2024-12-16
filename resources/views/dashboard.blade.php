@@ -1,15 +1,20 @@
 <x-app-layout>
-    <div class="py-12 bg-no-repeat bg-cover min-h-screen text-md md:text-xl" style="background-image: url('{{ asset('images/teaBackground2.jpg') }}');  background-position: bottom right;">
-        <div class="max-w-7xl mx-auto min-mx-[10%] sm:px-6 lg:px-8">
+    <div class="py-12 bg-no-repeat bg-cover min-h-screen text-md md:text-xl" style="background-image: url('{{ asset('images/teaBackground2.webp') }}');  background-position: bottom right;">
+        <div class="max-w-7xl mx-[5%] sm:mx-auto sm:px-6 lg:px-8">
             <h1><b>NATIONAL TEA DRINKING YEAR 1</b></h1>
 
-            <form method="POST" action="{{ route('dashboard.store') }}">
+            <form method="POST" action="{{ route('dashboard.store') }}" class="bg-zinc-900/[.2] flex flex-col sm:flex-row items-start gap-1 sm:items-center justify-evenly">
                 @csrf
-                <label for="message">Tea Type: </label>
-                <input type="text" name="message" id="message" />
-                <input type="number" min="1" max="10" name="rating"/>
+                <div>
+                    <label for="message">Tea Type: </label>
+                    <input type="text" name="message" id="message" />
+                </div>
+                <div>
+                    <label for="rating">Tea Rating: </label>
+                    <input type="number" min="1" max="10" name="rating"/>
+                </div>
                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
-                <x-primary-button class="mt-4">{{ __('Log') }}</x-primary-button>
+                <x-primary-button class="my-4">{{ __('Log') }}</x-primary-button>
             </form>
 
             <div class="mt-6">

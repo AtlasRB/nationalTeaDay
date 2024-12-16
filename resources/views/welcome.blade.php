@@ -19,8 +19,8 @@
             </style>
         @endif
     </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50 bg-no-repeat bg-cover" style="background-image: url('{{ asset('images/teaBackground1.jpg') }}');">
-        <nav class="bg-white text-black flex justify-center" style="gap: 3vw">
+    <body class="font-sans antialiased dark:bg-black dark:text-white/50 bg-no-repeat bg-cover min-h-screen" style="background-image: url('{{ asset('images/teaBackground1.webp') }}'); background-position: bottom right;">
+        <nav class="bg-white/[0.6] text-black flex flex-col sm:flex-row justify-center" style="gap: 3vw">
             <a href="#tea1" class="hover:bg-gray-400 rounded-lg duration-500 p-1 my-0.5">NATIONAL TEA DRINKING YEAR 1</a>
             <a href="#tea2" class="hover:bg-gray-400 rounded-lg duration-500 p-1 my-0.5">NATIONAL TEA DRINKING YEAR 2</a>
         </nav>
@@ -58,24 +58,27 @@
             <div id="tea1" class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="margin-bottom: 10vh">
                 <h1>NATIONAL TEA DRINKING YEAR 1</h1>
                 <p>Total teas logged: {{$teaCount1}}</p>
-                <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    @foreach ($teas1 as $tea)
-                        <div class="p-6 flex space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <span class="text-gray-800">{{ $tea->user->name }}</span>
-                                        <small class="ml-2 text-sm text-gray-600">Time tea was logged: {{ $tea->created_at->format('j M Y, g:i a') }}</small>
-                                        <p>Tea Rating: {{ $tea->rating }}</p>
-                                    </div>
-                                </div>
-                                <p class="mt-4 text-lg text-gray-900">{{ $tea->message }}</p>
-                            </div>
-                        </div>
-                    @endforeach
+                <div class="mt-6 bg-white shadow-sm rounded-lg divide-y text-black">
+                    <table class="my-8 w-full min-w-[50%] text-center rounded">
+                        <thead class="border-collapse border-b border-slate-500">
+                        <tr>
+                            <th>Name</th>
+                            <th>Tea type</th>
+                            <th>Rating</th>
+                            <th>Logged Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($teas1 as $tea)
+                            <tr>
+                                <td class="py-2">{{ $tea->user->name }}</td>
+                                <td>{{ $tea->message }}</td>
+                                <td>{{ $tea->rating }}</td>
+                                <td>{{ $tea->created_at->format('j M Y, g:i a') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -83,24 +86,27 @@
             <div id="tea2" class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="margin-bottom: 10vh">
                 <h1>NATIONAL TEA DRINKING YEAR 2</h1>
                 <p>Total teas logged: {{$teaCount2}}</p>
-                <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    @foreach ($teas2 as $tea)
-                        <div class="p-6 flex space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <span class="text-gray-800">{{ $tea->user->name }}</span>
-                                        <small class="ml-2 text-sm text-gray-600">Time tea was logged: {{ $tea->created_at->format('j M Y, g:i a') }}</small>
-                                        <p>Tea Rating: {{ $tea->rating }}</p>
-                                    </div>
-                                </div>
-                                <p class="mt-4 text-lg text-gray-900">{{ $tea->message }}</p>
-                            </div>
-                        </div>
-                    @endforeach
+                <div class="mt-6 bg-white shadow-sm rounded-lg divide-y text-black">
+                    <table class="my-8 w-full min-w-[50%] text-center rounded">
+                        <thead class="border-collapse border-b border-slate-500">
+                        <tr>
+                            <th>Name</th>
+                            <th>Tea type</th>
+                            <th>Rating</th>
+                            <th>Logged Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($teas2 as $tea)
+                            <tr>
+                                <td class="py-2">{{ $tea->user->name }}</td>
+                                <td>{{ $tea->message }}</td>
+                                <td>{{ $tea->rating }}</td>
+                                <td>{{ $tea->created_at->format('j M Y, g:i a') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
