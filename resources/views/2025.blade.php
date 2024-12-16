@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1>NATIONAL TEA DRINKING DAY 2</h1>
+            <h1>NATIONAL TEA DRINKING YEAR 2</h1>
 
             <form method="POST" action="{{ route('2025.store') }}">
                 @csrf

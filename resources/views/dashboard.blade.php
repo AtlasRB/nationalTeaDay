@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1>NATIONAL TEA DRINKING DAY 1</h1>
+    <div class="py-12 bg-no-repeat bg-cover min-h-screen text-md md:text-xl" style="background-image: url('{{ asset('images/teaBackground2.jpg') }}');  background-position: bottom right;">
+        <div class="max-w-7xl mx-auto min-mx-[10%] sm:px-6 lg:px-8">
+            <h1><b>NATIONAL TEA DRINKING YEAR 1</b></h1>
 
             <form method="POST" action="{{ route('dashboard.store') }}">
                 @csrf
@@ -12,44 +12,51 @@
                 <x-primary-button class="mt-4">{{ __('Log') }}</x-primary-button>
             </form>
 
-            <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+            <div class="mt-6">
                 <p>Total teas logged: {{$teaCount}}</p>
                 <p>Total teas you have logged: {{$userCount}}</p>
-                <div class="mt-4">
-                    <a href="{{ route('dashboard') }}" class="px-4 py-2 bg-blue-500 rounded">Show All Teas</a>
-                    <a href="{{ route('dashboard.filteredC') }}" class="px-4 py-2 bg-green-500 rounded">Show Filtered Connor Teas</a>
-                    <a href="{{ route('dashboard.filteredH') }}" class="px-4 py-2 bg-green-400 rounded">Show Filtered Henry Teas</a>
+                <div class="mt-4 flex flex-col sm:flex-row gap-2">
+                    <a href="{{ route('dashboard') }}" class="px-4 py-2 bg-blue-400 rounded max-w-[40%] text-center">Show All Teas</a>
+                    <a href="{{ route('dashboard.filteredC') }}" class="px-4 py-2 bg-green-400 rounded max-w-[40%] text-center">Filter By Connor Teas</a>
+                    <a href="{{ route('dashboard.filteredH') }}" class="px-4 py-2 bg-green-400 rounded max-w-[40%] text-center">Filter By Henry Teas</a>
                 </div>
-                @foreach ($teas as $tea)
-                    <div class="p-6 flex space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <span class="text-gray-800">{{ $tea->user->name }}</span>
-                                    <small class="ml-2 text-sm text-gray-600">Time tea was logged: {{ $tea->created_at->format('j M Y, g:i a') }}</small>
-                                    <p>Tea Rating: {{ $tea->rating }}</p>
-                                </div>
-                            </div>
-                            <p class="mt-4 text-lg text-gray-900">{{ $tea->message }}</p>
-                        </div>
-                    </div>
-                    @if ($tea->user_id === auth()->id())
-                    <form method="POST" action="{{ route('dashboard.destroy', $tea->id) }}" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this log?');">
-                            Delete
-                        </button>
-                    </form>
-                    @endif
-                @endforeach
+                <div>
+                    <table class="my-8 w-full min-w-[50%] text-center bg-zinc-900/[.2] rounded">
+                        <thead class="border-collapse border border-slate-500">
+                        <tr>
+                            <th>Name</th>
+                            <th>Tea type</th>
+                            <th>Rating</th>
+                            <th>Logged Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($teas as $tea)
+                                <tr>
+                                    <td class="py-2">{{ $tea->user->name }}</td>
+                                    <td>{{ $tea->message }}</td>
+                                    <td>{{ $tea->rating }}</td>
+                                    <td>{{ $tea->created_at->format('j M Y, g:i a') }}</td>
+                                    @if ($tea->user_id === auth()->id())
+                                        <td class=" w-full max-w-[10%]">
+                                            <form method="POST" action="{{ route('dashboard.destroy', $tea->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="px-2 py-1 bg-red-400 rounded" type="submit" onclick="return confirm('Are you sure you want to delete this log?');">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <section id="statistics">
-                <h2>Statistics</h2>
+            <section id="statistics" class="bg-zinc-900/[.2] w-fit">
+                <h2><b>Statistics</b></h2>
                 <p>Total tea average rating: {{$totalAverage}}</p>
                 <p>Your total tea average rating: {{$userAverage}}</p>
             </section>

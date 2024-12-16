@@ -74,6 +74,7 @@ class TeaController extends Controller
     }
 
 
+
     /** Functions for tea day 2 **/
     public function index2(Request $request): View
     {
@@ -132,5 +133,19 @@ class TeaController extends Controller
         $tea->delete();
 
         return redirect()->route('2025')->with('success', 'Log deleted successfully.');
+    }
+
+
+
+
+    /** Display for welcome page **/
+    public function show(): View
+    {
+        return view('welcome', [
+            'teaCount1' => Tea::where('year', 1)->get()->count(),
+            'teas1' => Tea::where('year', 1)->get(),
+            'teaCount2' => Tea::where('year', 2)->get()->count(),
+            'teas2' => Tea::where('year', 2)->get(),
+        ]);
     }
 }

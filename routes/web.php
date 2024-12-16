@@ -4,9 +4,8 @@ use \App\Http\Controllers\TeaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [TeaController::class, 'show'])->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
    Route::get('/dashboard', [TeaController::class, 'index'])->name('dashboard');
